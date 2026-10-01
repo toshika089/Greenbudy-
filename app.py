@@ -13,7 +13,7 @@ f = st.file_uploader("Upload a tomato leaf photo", type=["jpg", "jpeg", "png"])
 img = Image.open(f).convert("RGB") if f else None
 p = model.predict(np.expand_dims(np.array(img.resize((224, 224)), dtype="float32"), 0), verbose=0)[0] if f else None
 top = class_names[int(np.argmax(p))] if f else None
-st.image(img, width=300) if f else None
-st.subheader("Diagnosis: " + top + " (" + str(round(float(p.max()) * 100, 1)) + "% confidence)") if f else None
-st.write("Care tip: " + tips[top]) if f else None
-st.bar_chart(dict(zip(class_names, [float(v) for v in p]))) if f else None
+_ = st.image(img, width=300) if f else None
+_ = st.subheader("Diagnosis: " + top.replace("_", " ") + " (" + str(round(float(p.max()) * 100, 1)) + "% confidence)") if f else None
+_ = st.write("Care tip: " + tips[top]) if f else None
+_ = st.bar_chart(dict(zip(class_names, [float(v) for v in p]))) if f else None
